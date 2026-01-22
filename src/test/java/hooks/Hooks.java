@@ -22,6 +22,7 @@ public class Hooks {
         stop();
     }
 
+    // Take screenshot after each step
     @AfterStep
     public void logScreenshot(){
         CucumberLogUtils.logScreenshot();

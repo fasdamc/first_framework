@@ -329,5 +329,6 @@ public class All_Steps {
         String expectedMessage = "Record Saved Successfully";
         Assert.assertEquals(actualMessageText, expectedMessage, "Expected success message not found.");
         CucumberLogUtils.logScreenshot();
+        System.out.println(" New student record created successfully ");
     }
 }

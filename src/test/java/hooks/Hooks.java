@@ -17,6 +17,7 @@ public class Hooks {
         start();
     }
 
+    // Quit WebDriver after each scenario
     @After
     public void stopTest(){
         stop();

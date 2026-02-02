@@ -1,0 +1,33 @@
+name: Run Regression Tests (manual & scheduled)
+
+# Runs manually via the Actions UI or on a schedule (daily at 11:30 PM EST)
+# NOTE: GitHub cron schedules use UTC. 11:30 PM EST (UTC-5) = 04:30 UTC next day.
+# If you require DST-aware scheduling, consider using repository_dispatch from an external scheduler or update the cron when DST starts/ends.
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: '30 4 * * *' # 04:30 UTC daily => 23:30 EST daily (UTC-5)
+
+jobs:
+  smoke-tests:
+    name: Run RegressionTest Runner
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17 and cache Maven
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+
+      - name: Run Smoke tests with Maven (RunSmokeTest)
+        run: mvn -B -Dtest=RunRegressionTest test
+        # Using -Dtest=RunSmokeTest targets the TestNG/Cucumber runner class named RunSmokeTest
+
+      # Optional: you can upload test reports or artifacts here if desired
+
